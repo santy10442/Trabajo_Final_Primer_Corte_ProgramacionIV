@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistema de Gestion de Usuarios</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Gestion de Usuarios</h1>
+  <form id="formAgregar">
+    <button type="submit">Agregar Usuario</button>
+  </form>
+
+  <input type="text" id="buscarCedula" placeholder="Buscar por cédula">
+  <select id="filtroCiudad"></select>
+  <select id="filtroDepartamento"></select>
+
+  <table id="tablaUsuarios">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Cedula</th>
+        <th>Edad</th>
+        <th>Celular</th>
+        <th>Telefono</th>
+        <th>Email</th>
+        <th>Ciudad</th>
+        <th>Departamento</th>
+        <th>Fecha Nacimiento</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody id="tablaUsuariosBody">
+      </tbody>
+  </table>
+
+  <script>
+    const usuarios = []; 
+    const ciudades = ["Bogotá", "Medellín", "Cali", "Manizales", "Pereira"];
+    const departamentos = ["Cundinamarca", "Antioquia", "Valle del Cauca", "Caldas", "Risaralda"];
+
+    function llenarSelects() {
+      const selectCiudad = document.getElementById('filtroCiudad');
+      const selectDepartamento = document.getElementById('filtroDepartamento');
+
+      ciudades.forEach(ciudad => {
+        const option = document.createElement('option');
+        option.value = ciudad;
+        option.textContent = ciudad;
+        selectCiudad.appendChild(option);
+      });
+
+      departamentos.forEach(departamento => {
+        const option = document.createElement('option');
+        option.value = departamento;
+        option.textContent = departamento;
+        selectDepartamento.appendChild(option);
+      });
+    }
+
+    function mostrarUsuarios() {
+      const tablaBody = document.getElementById('tablaUsuariosBody');
+      tablaBody.innerHTML = ''; 
+
+      usuarios.forEach(usuario => {
+        const fila = document.createElement('tr');
+        fila.innerHTML = `
+          <td><span class="math-inline">\{usuario\.nombre\}</td\>
+<td\></span>{usuario.cedula}</td>
+          <td><span class="math-inline">\{usuario\.edad\}</td\>
+<td\></span>{usuario.celular}</td>
+          <td><span class="math-inline">\{usuario\.telefono \|\| '\-'\}</td\> <td\></span>{usuario.email}</td>
+          <td><span class="math-inline">\{usuario\.ciudad\}</td\>
+<td\></span>{usuario.departamento}</td>
+          <td>${usuario.fecha_nacimiento}</td>
+          <td>
+            <button>Editar</button> <button>Borrar</button>
+          </td>
+        `;
+        tablaBody.appendChild(fila);
+      });
+    }
+
+    llenarSelects();
+    // Call mostrarUsuarios() initially to display any existing users (replace with actual data fetching)
+    // mostrarUsuarios();
+
+    // Add event listener for form submission and implement agregarUsuario() function
+    //
